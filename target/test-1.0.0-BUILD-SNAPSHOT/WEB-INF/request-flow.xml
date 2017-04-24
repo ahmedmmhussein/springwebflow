@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow 
+  http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	start-state="employeeForm">
+
+	<var name="request" class="hr.beans.Request" />
+
+	<!-- Employee -->
+	<view-state id="employeeForm" >
+		<on-entry>
+			<evaluate result="viewScope.employeesList" expression="employeeDao.findEmployees()" />
+			<evaluate result="viewScope.departmentsList"
+				expression="departmentDao.findDepartments()" />
+		</on-entry>
+		<transition on="employeeEntered" to="requestForm">
+			<evaluate result="request.sender"
+				expression="hrFlowActions.findEmployeeById(requestParameters.id)" />
+			<evaluate result="request.receiverDepartment"
+				expression="hrFlowActions.findDepartmentById(requestParameters.departmentId)" />
+		</transition>
+		<transition on="cancel" to="cancel" />
+	</view-state>
+
+	<view-state id="requestForm" model="request" popup="true">
+		<transition on="requestEntered" to="checknotifyEmployees" />
+		<transition on="cancel" to="cancel" />
+	</view-state>
+
+	<decision-state id="checknotifyEmployees">
+		<if test="request.notify == true" then="notifyEmployees" else="addRequest" />
+	</decision-state>
+
+	<view-state id="notifyEmployees">
+		<on-entry>
+			<evaluate result="viewScope.employeesList" expression="jdbcEmployeeRepository.findEmployees()" />
+		</on-entry>
+		<transition on="doneSelect" to="addRequest">
+			<evaluate result="request.notifiedEmployee"
+				expression="hrFlowActions.findEmployeeById(requestParameters.notifiedId)" />
+		</transition>
+		<transition on="cancel" to="cancel" />
+	</view-state>
+
+	<action-state id="addRequest">
+		<evaluate expression="hrFlowActions.addRequest(request)" />
+		<transition to="requestReady" />
+	</action-state>
+
+	<view-state id="requestReady">
+		<transition on="finish" to="thankYou" />
+		<transition on="cancel" to="cancel" />
+	</view-state>
+
+	<view-state id="thankYou">
+		<transition to="endState" />
+	</view-state>
+
+	<!-- End state -->
+	<end-state id="endState" />
+
+	<global-transitions>
+		<transition on="cancel" to="endState" />
+	</global-transitions>
+</flow>
