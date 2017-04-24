@@ -85,10 +85,10 @@ http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springfram
 			<value>smtp</value>
 		</property>
 		<property name="username">
-			<value>ahmedmmhussin@gmail.com</value>
+			<value></value>
 		</property>
 		<property name="password">
-			<value>A4349567a</value>
+			<value></value>
 		</property>
 		<property name="javaMailProperties">
 			<props>
