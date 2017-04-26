@@ -26,6 +26,14 @@
 		<input type="hidden" name="_flowExecutionKey"
 			value="${flowExecutionKey}" />
 		<input type="submit" name="_eventId_finish" value="Done" />
+		<form:form commandName="request">
+			<input type="hidden" name="_flowExecutionKey"
+				value="${flowExecutionKey}" />
+			<input type="submit" name="_eventId_sendMail"
+				value="SendRequestViaMail" />
+		</form:form>
+		<button onclick="window.print();">Print Request</button>
 	</form:form>
+
 </body>
 </html>

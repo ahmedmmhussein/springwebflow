@@ -12,6 +12,7 @@ public class Department implements Serializable {
 	private static final long serialVersionUID = -4316174758430067388L;
 	private long departmentId;
 	private String departmentName;
+	private String departmentEmail;
 
 	@Override
 	public boolean equals(Object that) {
@@ -42,6 +43,14 @@ public class Department implements Serializable {
 
 	public void setDepartmentName(String departmentName) {
 		this.departmentName = departmentName;
+	}
+
+	public String getDepartmentEmail() {
+		return departmentEmail;
+	}
+
+	public void setDepartmentEmail(String departmentEmail) {
+		this.departmentEmail = departmentEmail;
 	}
 
 }

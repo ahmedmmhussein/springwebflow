@@ -8,11 +8,10 @@
 	<var name="request" class="hr.beans.Request" />
 
 	<!-- Employee -->
-	<view-state id="employeeForm" >
+	<view-state id="employeeForm">
 		<on-entry>
-			<evaluate result="viewScope.employeesList" expression="employeeDao.findEmployees()" />
-			<evaluate result="viewScope.departmentsList"
-				expression="departmentDao.findDepartments()" />
+			<evaluate result="viewScope.employeesList" expression="hrFlowActions.findEmployees()" />
+			<evaluate result="viewScope.departmentsList" expression="hrFlowActions.findDepartments()" />
 		</on-entry>
 		<transition on="employeeEntered" to="requestForm">
 			<evaluate result="request.sender"
@@ -50,8 +49,14 @@
 
 	<view-state id="requestReady">
 		<transition on="finish" to="thankYou" />
+		<transition on="sendMail" to="sendMail" />
 		<transition on="cancel" to="cancel" />
 	</view-state>
+
+	<action-state id="sendMail">
+		<evaluate expression="hrFlowActions.sendRequestAsEmail(request)" />
+		<transition to="thankYou" />
+	</action-state>
 
 	<view-state id="thankYou">
 		<transition to="endState" />

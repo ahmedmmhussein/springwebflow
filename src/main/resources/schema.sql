@@ -1,12 +1,13 @@
 create table Department (
 	departmentId identity,
-	departmentName varchar(255) unique not null
+	departmentName varchar(255) unique not null,
+	departmentEmail varchar(255) not null
 );
-INSERT INTO Department (departmentName) VALUES ('Production');
-INSERT INTO Department (departmentName) VALUES ('Research and Development');
-INSERT INTO Department (departmentName) VALUES ('Marketing');
-INSERT INTO Department (departmentName) VALUES ('Human Resource Management');
-INSERT INTO Department (departmentName) VALUES ('Accounting and Finance');
+INSERT INTO Department (departmentName,departmentEmail) VALUES ('Production','production@poet.com');
+INSERT INTO Department (departmentName,departmentEmail) VALUES ('Research and Development','r&d@poet.com');
+INSERT INTO Department (departmentName,departmentEmail) VALUES ('Marketing','marketing@poet.com');
+INSERT INTO Department (departmentName,departmentEmail) VALUES ('Human Resource Management','hr@poet.com');
+INSERT INTO Department (departmentName,departmentEmail) VALUES ('Accounting and Finance','accounting@poet.com');
 create table Employee(
 	id identity,
 	name varchar(255) unique not null ,
